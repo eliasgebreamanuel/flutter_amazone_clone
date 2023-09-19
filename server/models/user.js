@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
         required: true,
         type: String,
         trim: true,
-        Validate: {
+        validate: {
             validator: (value) => {
                 const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
                 return value.match(re);
@@ -37,7 +37,7 @@ const userSchema = mongoose.Schema({
         default: 'user'
      },
      // cart
-})
+});
 
-const User = mongoose.model("User", usderSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;

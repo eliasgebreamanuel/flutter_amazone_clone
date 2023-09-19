@@ -9,6 +9,7 @@ const PORT = 3000;
 const app = express();
 
 // middleware
+app.use(express.json());
 app.use(authRouter);
 // CREATING AN API
 // GET, PUT, POST, DELETE, UPDATE -> CRUD
@@ -29,6 +30,6 @@ mongoose.connect(DB)
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`Connected at port ${PORT}`);
-})
+});
