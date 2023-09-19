@@ -38,15 +38,14 @@ class _AuthScreenState extends State<AuthScreen> {
         body: SafeArea(
             child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Text('Welcome',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
             ListTile(
-                tileColor: _auth == Auth.signup ?
-                    GlobalVariables.backgroundColor :
-                      GlobalVariables.greyBackgroundCOlor, 
+                tileColor: _auth == Auth.signup
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 // leading: IconButton(iconSize: 36, onPressed: () {}, icon: ImageIcon()),
                 title: const Text('Create Account',
                     style: TextStyle(fontWeight: FontWeight.bold)),
@@ -89,9 +88,9 @@ class _AuthScreenState extends State<AuthScreen> {
                     )),
               ),
             ListTile(
-                   tileColor: _auth == Auth.signin ?
-                    GlobalVariables.backgroundColor :
-                      GlobalVariables.greyBackgroundCOlor, 
+                tileColor: _auth == Auth.signin
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 title: const Text('Sign-In',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 leading: Radio(
@@ -104,7 +103,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     });
                   },
                 )),
-                 if (_auth == Auth.signin)
+            if (_auth == Auth.signin)
               Container(
                 padding: const EdgeInsets.all(8),
                 color: GlobalVariables.backgroundColor,
@@ -112,7 +111,6 @@ class _AuthScreenState extends State<AuthScreen> {
                     key: _signUpFormKey,
                     child: Column(
                       children: [
-                        
                         CustomTextField(
                           controller: _emailController,
                           hintText: 'Email',
