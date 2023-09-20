@@ -58,5 +58,17 @@ authRouter.post("/api/signin", async (req, res) => {
     }catch(e) {
         res.status(500).json({ error: e.message });
     }
-})
+});
+
+
+authRouter.post("/tokenIsValid", async (req, res) => {
+    try {
+        const token = req.header('x-auth-token');
+        if(!token) return res.json(false);
+    }catch(e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+
 module.exports = authRouter;
