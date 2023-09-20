@@ -1,14 +1,18 @@
-import 'package:http/http.dart';
+import 'dart:convert';
 
-void httpErrorHandle({
-  required http.Response response,
-  required BuildContext context,
-  required VoidCallback onSuccess
-}) {
-  switch(response.statusCode) {
+import 'package:flutter/material.dart';
+import 'package:flutter_amazone_clone/constants/utils.dart';
+import 'package:http/http.dart' as http;
+// import 'package:http/http.dart';
+
+void httpErrorHandle(
+    {required http.Response response,
+    required BuildContext context,
+    required VoidCallback onSuccess}) {
+  switch (response.statusCode) {
     case 200:
-     onSuccess();
-     break;
+      onSuccess();
+      break;
     case 400:
       showSnackBar(context, jsonDecode(response.body)['msg']);
       break;

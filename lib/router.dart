@@ -1,5 +1,6 @@
 // ignore: depend_on_referenced_packages
-import 'package:/flutter/material.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_amazone_clone/features/auth/screens/auth_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {

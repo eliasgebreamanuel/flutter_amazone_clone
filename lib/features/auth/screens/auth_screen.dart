@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_amazone_clone/common/widgets/custom_button.dart';
 import 'package:flutter_amazone_clone/common/widgets/custom_textfield.dart';
 import 'package:flutter_amazone_clone/constants/global_variables.dart';
+import 'package:flutter_amazone_clone/features/auth/services/auth_service.dart';
 
 enum Auth { signin, signup }
 
@@ -31,13 +32,19 @@ class _AuthScreenState extends State<AuthScreen> {
     _nameController.dispose();
   }
 
-  void signUpUser(){
-    authService.signUpUser(
-      context: context,
-      email: _emailController.text,
-      password: _passwordController.text,
-      name: _nameController.text
-    )
+  void signUpUser() {
+    authService.signupUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+        name: _nameController.text);
+  }
+  void signInUser(){
+        authService.signInUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
   }
   @override
   Widget build(BuildContext context) {
@@ -116,7 +123,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 padding: const EdgeInsets.all(8),
                 color: GlobalVariables.backgroundColor,
                 child: Form(
-                    key: _signUpFormKey,
+                    key: _signInFormKey,
                     child: Column(
                       children: [
                         CustomTextField(
@@ -130,7 +137,13 @@ class _AuthScreenState extends State<AuthScreen> {
                             controller: _passwordController,
                             hintText: 'Password'),
                         const SizedBox(height: 10),
-                        CustomButton(text: 'Sign Up', onTap: () {})
+                        CustomButton(
+                            text: 'Sign In',
+                            onTap: () {
+                              if (_signInFormKey.currentState!.validate()) {
+                                signInUser();
+                              }
+                            })
                       ],
                     )),
               ),
