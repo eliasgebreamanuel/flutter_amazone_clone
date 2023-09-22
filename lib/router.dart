@@ -1,6 +1,7 @@
 // ignore: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
+import 'package:flutter_amazone_clone/common/widgets/bottom_bar.dart';
 import 'package:flutter_amazone_clone/features/auth/screens/auth_screen.dart';
 import 'package:flutter_amazone_clone/features/home/screens/home_screens.dart';
 
@@ -12,6 +13,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case HomeScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const HomeScreen());
+     case BottomBar.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const BottomBar());
+    
     default:
       return MaterialPageRoute(
           settings: routeSettings,

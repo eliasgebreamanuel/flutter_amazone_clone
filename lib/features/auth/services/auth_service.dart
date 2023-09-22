@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_amazone_clone/common/widgets/bottom_bar.dart';
 import 'package:flutter_amazone_clone/constants/error_handling.dart';
 import 'package:flutter_amazone_clone/constants/utils.dart';
 import 'package:flutter_amazone_clone/features/home/screens/home_screens.dart';
@@ -72,7 +73,7 @@ class AuthService {
             await prefs.setString(
                 'x-auth-token', jsonDecode(res.body)['token']);
             Navigator.pushNamedAndRemoveUntil(
-                context, HomeScreen.routeName, (route) => false);
+                context, BottomBar.routeName, (route) => false);
           });
     } catch (e) {
       showSnackBar(context, e.toString());
@@ -91,6 +92,23 @@ class AuthService {
         prefs.setString('x-auth-token', '');
       }
 
+      var tokenRes = await http.post(Uri.parse('$uri/tokenIsValid'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'x-auth-token': token!
+          });
+
+      var response = jsonDecode(tokenRes.body);
+      if (response == true) {
+        // get user data
+        http.Response userRes = await http.get(Uri.parse('$uri/'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'x-auth-token': token
+            });
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUser(userRes.body);
+      }
       // http.Response res = await http.post(Uri.parse('$uri/api/signin'),
       //     body: jsonEncode({'email': email, 'password': password}),
       //     headers: <String, String>{
