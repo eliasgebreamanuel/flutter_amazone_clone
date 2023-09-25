@@ -32,7 +32,8 @@ dependencies:
   carousel_slider: ^4.2.1
   cupertino_icons: ^1.0.2
   dotted_border: ^2.0.0+3
-  file_picker: 4.5.1
+  file_picker: 3.0.0
+  cloudinary_public: ^0.21.0
   flutter:
     sdk: flutter
   http: ^0.13.4
