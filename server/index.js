@@ -11,6 +11,7 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 // CREATING AN API
 // GET, PUT, POST, DELETE, UPDATE -> CRUD
 // app.get('/', (req, res) => {
