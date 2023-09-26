@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_amazone_clone/constants/utils.dart';
+import 'package:flutter_amazone_clone/models/product.dart';
 
 class AdminSercies {
   void sellProduct(
@@ -22,6 +23,15 @@ class AdminSercies {
             .uploadFile(CloudinaryFile.fromFile(images[i].path, folder: name));
         imageUrls.add(res.secureUrl);
       }
+
+      Product product = Product(
+        name: name,
+        description: description,
+        quantity: quantity,
+        images: imageUrls,
+        category: category,
+        price: price
+      );
     } catch (e) {
       showSnackBar(context, e.toString());
     }
