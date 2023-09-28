@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_amazone_clone/models/rating.dart';
 
 class Product {
   final String name;
@@ -8,7 +9,7 @@ class Product {
   final String category;
   final double price;
   final String? id;
-  final String? userId;
+  final List<Rating>? rating;
   Product({
     required this.name,
     required this.description,
@@ -17,7 +18,7 @@ class Product {
     required this.category,
     required this.price,
     this.id,
-    this.userId,
+    this.rating,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,7 +30,7 @@ class Product {
       'category': category,
       'price': price,
       'id': id,
-      'userId': userId,
+      'rating': rating,
     };
   }
 
@@ -42,7 +43,13 @@ class Product {
       category: map['category'] ?? '',
       price: map['price']?.toDouble() ?? 0.0,
       id: map['_id'],
-      userId: map['userId']
+      rating: map['ratings'] != null
+          ? List<Rating>.from(
+              map['ratings']?.map(
+                (x) => Rating.fromMap(x),
+              ),
+            )
+          : null,
     );
   }
 

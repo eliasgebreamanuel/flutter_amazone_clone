@@ -22,7 +22,7 @@ class ProductDetailsServices {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token
         },
-        body: jsonEncode({'id': product.id!, 'rating': rating}),
+        body: jsonEncode({'id': product.id!, }),
       );
 
       httpErrorHandle(

@@ -7,6 +7,9 @@ import 'package:flutter_amazone_clone/features/product_details/services/product_
 import 'package:flutter_amazone_clone/features/search/screens/search_screen.dart';
 import 'package:flutter_amazone_clone/models/product.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/user_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const String routeName = '/product-details';
@@ -20,6 +23,23 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final ProductDetailsServices productDetailsServices =
       ProductDetailsServices();
+  double avgRating = 0;
+  double myRating = 0;
+  void initState() {
+    super.initState();
+    double totalRating = 0;
+    for (int i = 0; i < widget.product.rating!.length; i++) {
+      totalRating += widget.product.rating![i].rating;
+      if (widget.product.rating![i].userId ==
+          Provider.of<UserProvider>(context, listen: false).user.id) {
+        myRating = widget.product.rating![i].rating;
+      }
+    }
+    if (totalRating != 0) {
+      avgRating = totalRating / widget.product.rating!.length;
+    }
+  }
+
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
@@ -92,7 +112,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Text(
                     widget.product.id!,
                   ),
-                  const Stars(rating: 4)
+                   Stars(rating: avgRating)
                 ],
               ),
             ),
@@ -120,7 +140,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             fontWeight: FontWeight.bold),
                         children: [
                       TextSpan(
-                          text: '\$${widget.product.price}',
+                          text: 'price',
                           style: TextStyle(
                               fontSize: 22,
                               color: Colors.red,
@@ -151,7 +171,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     style:
                         TextStyle(fontSize: 22, fontWeight: FontWeight.bold))),
             RatingBar.builder(
-              initialRating: 0,
+              initialRating: myRating,
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: true,

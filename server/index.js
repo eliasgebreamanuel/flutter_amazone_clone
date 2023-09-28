@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(authRouter);
 app.use(adminRouter);
 app.use(productRouter);
+app.use(userRouter);
 // CREATING AN API
 // GET, PUT, POST, DELETE, UPDATE -> CRUD
 // app.get('/', (req, res) => {
