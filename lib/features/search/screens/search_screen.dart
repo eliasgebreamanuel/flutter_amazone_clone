@@ -1,31 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_amazone_clone/common/widgets/loader.dart';
 import 'package:flutter_amazone_clone/constants/global_variables.dart';
 import 'package:flutter_amazone_clone/features/home/screens/widget/address_box.dart';
-import 'package:flutter_amazone_clone/features/home/screens/widget/carousel_image.dart';
-import 'package:flutter_amazone_clone/features/home/screens/widget/deal_of_the_day.dart';
-import 'package:flutter_amazone_clone/features/home/screens/widget/top_categories.dart';
-import 'package:flutter_amazone_clone/features/search/screens/search_screen.dart';
-import 'package:flutter_amazone_clone/providers/user_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_amazone_clone/features/product_details/screens/product_details_screen.dart';
+import 'package:flutter_amazone_clone/features/search/services/search_services.dart';
+import 'package:flutter_amazone_clone/features/search/widget/searched_product.dart';
+import 'package:flutter_amazone_clone/models/product.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  static const String routeName = '/search-screen';
+  final String searchQuery;
+  const SearchScreen({super.key, required this.searchQuery});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  void navigateToSearchScreen(String query) {
-    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+class _SearchScreenState extends State<SearchScreen> {
+  List<Product>? products;
+  final SearchServices searchServices = SearchServices();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchSearchedProduct();
   }
 
+  fetchSearchedProduct() async {
+    products = await searchServices.fetchSearchedProduct(context: context, searchQuery: widget.searchQuery)
+    setState(() {});
+  }
+
+    void navigateToSearchScreen(String query) {
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
+  }
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
-        appBar: PreferredSize(
+      appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: AppBar(
               flexibleSpace: Container(
@@ -42,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(7),
                           elevation: 1,
                           child: TextFormField(
-                            onFieldSubmitted:  navigateToSearchScreen,
+                          onFieldSubmitted:  navigateToSearchScreen,
                               decoration: InputDecoration(
                                   prefixIcon: InkWell(
                                       onTap: () {},
@@ -78,13 +90,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               )),
         ),
-        body: Column(children: const [
-          AddressBox(),
-          SizedBox(height: 10),
-          TopCategories(),
-          SizedBox(height: 10),
-          CarouselImage(),
-          DealOfDay()
-        ]));
+      body: products == null ? const Loader() : Column(
+        children: [
+          const AddressBox(),
+          const SizedBox(height: 10),
+          Expanded(
+            child: ListView.builder(
+              itemCount: products!.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {Navigator.pushNamed(context, ProductDetailScreen.routeName, arguments: products![index]);},
+                  child: SearchedProduct(
+                    product: products![index]
+                  ),
+                );
+              }
+            )
+          )
+
+        ]
+      )
+    );
   }
 }
