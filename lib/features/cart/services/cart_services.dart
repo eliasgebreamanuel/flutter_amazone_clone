@@ -9,22 +9,20 @@ import 'package:flutter_amazone_clone/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-class ProductDetailsServices {
-  void rateProduct(
+class CartServices {
+  void removeProduct(
       {required BuildContext context,
       required Product product,
       required double rating}) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/admin/rate-product'),
+      http.Response res = await http.delete(
+        Uri.parse('$uri/api/remove-from-cart/${product.id}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token
         },
-        body: jsonEncode({
-          'id': product.id!,
-        }),
+        
       );
 
       httpErrorHandle(
