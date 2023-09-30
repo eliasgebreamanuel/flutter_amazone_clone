@@ -23,7 +23,7 @@ app.use(userRouter);
 //     res.json({msg:"hello world"});
 // });
 // Connections
-const DB = "mongodb+srv://root:root@cluster0.1mevaf6.mongodb.net/?retryWrites=true&w=majority";
+const DB = "mongodb+srv://root:<password>@cluster0.1mevaf6.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(DB)
 .then(() => {
     console.log("Connection To DB Successful");
